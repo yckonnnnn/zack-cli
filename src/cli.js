@@ -83,7 +83,7 @@ async function install(options) {
   if (!response.ok || !data?.ok) {
     fail(options, data?.error === "license_not_found" ? "This purchase link is not valid." : "Could not read the purchase.", 3);
   }
-  if (data.skill !== "zack-ui-pro" || !Array.isArray(data.files) || !data.files.length) {
+  if (data.skill !== options.skill || !Array.isArray(data.files) || !data.files.length) {
     fail(options, "The purchase response is incomplete.", 1);
   }
 
@@ -131,7 +131,7 @@ async function install(options) {
       path: target,
       files: data.files.length,
     }, [
-      "Zack UI Pro installed",
+      `${data.skill} installed`,
       `Buyer: ${data.displayName || data.buyer} (${data.buyer})`,
       `Order: ${data.order}`,
       `Version: ${data.version}`,
