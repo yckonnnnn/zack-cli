@@ -1,0 +1,23 @@
+{
+  "name": "zack-cli",
+  "version": "0.1.0",
+  "description": "Install Zack UI Pro directly into local agent skills folders",
+  "type": "module",
+  "bin": {
+    "zack": "bin/zack.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yckonnnnn/zack-cli.git"
+  },
+  "license": "MIT"
+}
