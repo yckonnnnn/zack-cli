@@ -11,6 +11,7 @@ import {
 } from "node:fs/promises";
 
 const DEFAULT_API = "https://zackui.com";
+const SKILLS = new Set(["zack-ui-pro", "zack-post-cards"]);
 
 function parseArgs(argv) {
   const options = {
@@ -72,10 +73,10 @@ function safeRelative(filePath) {
 
 async function install(options) {
   if (!options.license) fail(options, "Missing --license. Use the link generated after purchase.", 2);
-  if (options.skill && options.skill !== "zack-ui-pro") fail(options, `Unknown skill: ${options.skill}`, 2);
+  if (!options.skill || !SKILLS.has(options.skill)) fail(options, `Unknown skill: ${options.skill || "(missing)"}`, 2);
 
   const api = String(options.api || DEFAULT_API).replace(/\/+$/, "");
-  const response = await fetch(`${api}/api/skill/${encodeURIComponent(options.license)}`, {
+  const response = await fetch(`${api}/api/skill/${encodeURIComponent(options.license)}?skill=${encodeURIComponent(options.skill)}`, {
     headers: { Accept: "application/json" },
   });
   const data = await response.json().catch(() => null);
@@ -152,6 +153,7 @@ function help() {
     "",
     "Install:",
     "  npx --yes github:yckonnnnn/zack-cli install zack-ui-pro --license <code>",
+    "  npx --yes github:yckonnnnn/zack-cli install zack-post-cards --license <code>",
     "",
     "Optional:",
     "  --to <skills-root>   Install into a specific skills directory",
